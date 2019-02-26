@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: "movies-giphy"
+  banner:
+    image:
+      location: banner.txt
+
+apikeys:
+    giphy: "Tu api key"
+    omdb: "Tu api key"
