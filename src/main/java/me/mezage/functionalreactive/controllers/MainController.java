@@ -20,7 +20,7 @@ import java.util.List;
 @RestController
 public class MainController {
 
-    IMovieToGiphy service;
+    private IMovieToGiphy service;
 
     @Autowired
     public MainController(IMovieToGiphy service) {
@@ -31,6 +31,12 @@ public class MainController {
     public Flux<String> getMovies(@RequestParam("q") String movieString) {
         List<String> movies = Arrays.asList(movieString.split(","));
         return service.getGiphysFromMovies(movies);
+    }
+
+    @GetMapping(value = "/api/single/movie", produces = MediaType.APPLICATION_JSON_VALUE)
+    public Mono<String> getSingleMovies(@RequestParam("q") String movieString) {
+        List<String> movies = Arrays.asList(movieString.split(","));
+        return service.getGiphysFromMovies(movies).next();
     }
 
 }

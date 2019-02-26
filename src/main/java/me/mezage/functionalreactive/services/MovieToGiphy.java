@@ -28,8 +28,11 @@ public class MovieToGiphy implements IMovieToGiphy {
                 .parallel()
                 .runOn(scheduler)
                 .map(movie -> omdbService.apply(movie))
-                .flatMap(movie -> movie.zipWhen(m -> giphyService.apply(m.getSearch().get(0).getTitle()), (a, b) -> b.getData().get(0).getImages().getOriginalImage().getUrl()))
-                //.map(url -> )
+                .flatMap(movie ->
+                        movie.zipWhen(
+                                m -> giphyService.apply(m.getSearch().get(0).getTitle()),
+                                (a, b) -> b.getData().get(0).getImages().getOriginalImage().getUrl())
+                )
                 .sequential();
     }
 }
