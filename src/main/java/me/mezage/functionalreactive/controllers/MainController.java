@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
@@ -36,7 +35,7 @@ public class MainController {
     @GetMapping(value = "/api/single/movie", produces = MediaType.APPLICATION_JSON_VALUE)
     public Mono<String> getSingleMovies(@RequestParam("q") String movieString) {
         List<String> movies = Arrays.asList(movieString.split(","));
-        return service.getGiphysFromMovies(movies).next();
+        return service.getGiphysFromMovies(movies).next().<String>flatMap(s -> Mono.just("redirect:/"+s));
     }
 
 }
